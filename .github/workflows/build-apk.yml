@@ -21,12 +21,13 @@ jobs:
         run: npx cap add android
       - name: Apply app name and custom launcher icon
         run: |
-          sed -i 's/<string name="app_name">.*<\\/string>/<string name="app_name">Duite Gatut Wijayanto<\\/string>/' android/app/src/main/res/values/strings.xml
-          for d in mdpi hdpi xhdpi xxhdpi xxxhdpi; do
-            mkdir -p "android/app/src/main/res/mipmap-$d"
-            cp "android-res/mipmap-$d/ic_launcher.png" "android/app/src/main/res/mipmap-$d/ic_launcher.png"
-            cp "android-res/mipmap-$d/ic_launcher_round.png" "android/app/src/main/res/mipmap-$d/ic_launcher_round.png"
-          done
+            run: |
+    sed -i 's|<string name="app_name">.*</string>|<string name="app_name">Duite Gatut Wijayanto</string>|' android/app/src/main/res/values/strings.xml
+    for d in mdpi hdpi xhdpi xxhdpi xxxhdpi; do
+      mkdir -p "android/app/src/main/res/mipmap-$d"
+      cp "android-res/mipmap-$d/ic_launcher.png" "android/app/src/main/res/mipmap-$d/ic_launcher.png"
+      cp "android-res/mipmap-$d/ic_launcher_round.png" "android/app/src/main/res/mipmap-$d/ic_launcher_round.png"
+    done
       - name: Sync web app
         run: npx cap sync android
       - name: Build APK
